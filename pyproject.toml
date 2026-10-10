@@ -1,0 +1,41 @@
+[project]
+name = "ublock_filters"
+version = "1.0.0"
+requires-python = ">=3.12"
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+extend-exclude = [".artifacts"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+warn_unused_ignores = true
+exclude = ["^\\.artifacts/", "^\\.venv/"]
+
+[[tool.mypy.overrides]]
+module = ["selenium.*"]
+ignore_missing_imports = true
+
+[tool.pymarkdown]
+extensions.markdown-tables.enabled = true
+plugins.md013.enabled = false
+plugins.md033.allowed_elements = "img"
+
+[dependency-groups]
+dev = [
+    "actionlint-py==1.7.12.25",
+    "mdformat>=1.0.0",
+    "mdformat-gfm>=1.0.0",
+    "mypy>=2.4.0",
+    "pymarkdownlnt>=0.9.40",
+    "ruff==0.17.0",
+    "yamllint>=1.38.0",
+]

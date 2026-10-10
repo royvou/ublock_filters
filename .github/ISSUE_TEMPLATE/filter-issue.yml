@@ -1,0 +1,46 @@
+name: Filter issue or request
+description: Report missed content, wrongly hidden content, or request a site-specific exclusion.
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page URL
+      placeholder: https://example.com/...
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What needs changing?
+      options:
+        - Content targeted by a filter is still visible
+        - Useful content is hidden
+        - Request an additional exclusion
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Current and expected behavior
+      description: Describe the element and how to find it. Attach a screenshot if helpful; remove personal details.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Firefox and uBlock Origin versions
+    validations:
+      required: true
+  - type: input
+    id: filters
+    attributes:
+      label: Enabled filter files
+      description: List the subscriptions from this repository that you enabled, including optional extras.
+      placeholder: filters/marktplaats.txt, filters/optional.txt
+    validations:
+      required: true
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Other filter lists and cleanup extensions
+      description: Mention custom rules, cleanup extensions, and whether you use a signed-in, mobile or alternative page layout.

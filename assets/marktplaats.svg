@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Marktplaats filters</title>
+  <desc id="desc">A listing card with a filter badge on a warm orange tile.</desc>
+  <rect width="64" height="64" rx="15" fill="#f4a261"/>
+  <rect x="12" y="11" width="35" height="42" rx="7" fill="#fffaf2"/>
+  <path d="M20 21h19M20 29h13M20 37h9" fill="none" stroke="#263b42" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="45" cy="45" r="14" fill="#263b42"/>
+  <path d="M37 38h16l-6 8v6l-4 2V46Z" fill="#fffaf2"/>
+</svg>

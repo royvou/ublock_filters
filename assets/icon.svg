@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">ublock_filters</title>
+  <desc id="desc">A cream filter funnel centered on a charcoal tile.</desc>
+  <rect width="64" height="64" rx="15" fill="#263b42"/>
+  <path d="M37 38h16l-6 8v6l-4 2V46Z" transform="translate(-58 -60) scale(2)" fill="#fffaf2"/>
+</svg>
