@@ -1,7 +1,7 @@
 ! Title: ublock_filters - Marktplaats optional cleanup
 ! Description: Also hide reserved listings, related sections and same-seller recommendations.
 ! Homepage: https://github.com/royvou/ublock_filters
-! Version: 2026.10.10.6
+! Version: 2026.10.20.1
 ! Domains: marktplaats.nl
 ! Expires: 7 days
 ! License: MIT
@@ -9,12 +9,13 @@
 ! Install only if you want these additional exclusions.
 ! Inspired by Cleanplaats: https://github.com/Aron220/Cleanplaats
 
-! Reserved listings: match only the price label.
-marktplaats.nl##:is(.hz-Listing,.hz-StructuredListing) :is(.hz-Listing-price,[class*="ListingPrice_hz-Listing-price"],.hz-StructuredListing-price):has-text(/^\s*Gereserveerd\s*$/i):upward(.hz-Listing,.hz-StructuredListing)
+! Reserved listings: match only the price label. One substring prefilter covers the
+! legacy, structured and hashed CSS-module price classes; the exact text check
+! rejects other price labels.
+marktplaats.nl##:is(.hz-Listing,.hz-StructuredListing) [class*="Listing-price"]:has-text(/^\s*Gereserveerd\s*$/i):upward(.hz-Listing,.hz-StructuredListing)
 
 ! Ordinary related recommendations can be useful; these are opt-in.
-marktplaats.nl###similar-items-root
-marktplaats.nl##.SimilarAdsList-related-ads-section
+marktplaats.nl###similar-items-root,.SimilarAdsList-related-ads-section
 
 ! "Ook van deze adverteerder": hide the recommendation strip, keep its main listing.
 marktplaats.nl##[data-testid="listing-other-seller"]

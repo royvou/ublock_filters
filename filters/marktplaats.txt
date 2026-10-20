@@ -1,7 +1,7 @@
 ! Title: ublock_filters - Marktplaats promotional cleanup
 ! Description: Hide promoted placements, Admarkt listings and advertising clutter on Marktplaats.
 ! Homepage: https://github.com/royvou/ublock_filters
-! Version: 2026.10.10.7
+! Version: 2026.10.20.1
 ! Domains: marktplaats.nl
 ! Expires: 7 days
 ! License: MIT
@@ -12,45 +12,30 @@
 ! This file is independent of Cleanplaats and Marktplaats.
 
 ! Paid priority badges. Match badge text, never listing titles/descriptions.
-! Both exclusions share one candidate scan. Remove either regex alternative to keep that type.
-marktplaats.nl##:is(.hz-Listing,.hz-StructuredListing) :is(.hz-Listing-priority,.hz-Listing-priority-new,[class*="hz-Listing-priority-new"]):has-text(/^\s*(?:Topadvertentie|Dagtopper)\s*$/i):upward(.hz-Listing,.hz-StructuredListing)
+! One substring prefilter covers the legacy class and the hashed CSS-module class;
+! the exact text check rejects ordinary cards with a similar class.
+marktplaats.nl##:is(.hz-Listing,.hz-StructuredListing) [class*="hz-Listing-priority"]:has-text(/^\s*(?:Topadvertentie|Dagtopper)\s*$/i):upward(.hz-Listing,.hz-StructuredListing)
 
 ! Admarkt cards, including those without a website button.
 ! Match an Admarkt ID in the URL path; do not match /a in category names.
 ! Native /a prefilter reduces regex candidates; it is not enough to identify an ad by itself.
 ! Inspect the primary listing link, not links in same-seller recommendations.
-marktplaats.nl##.hz-Listing a:is(.hz-Listing-coverLink,[class*="hz-Listing-coverLink"])[href*="/v/"][href*="/a" i]:matches-attr(href=/^[^?#]*\/a\d+(?:[-/]|[?#]|$)/i):upward(.hz-Listing)
-marktplaats.nl##.hz-StructuredListing a[href*="/a" i]:matches-attr(href=/^[^?#]*\/a\d+(?:[-/]|[?#]|$)/i):upward(.hz-StructuredListing)
+! Require the /v/ path prefix before the regex on both card layouts.
+marktplaats.nl##.hz-Listing a[class*="hz-Listing-coverLink"][href*="/v/"][href*="/a" i]:matches-attr(href=/^[^?#]*\/a\d+(?:[-/]|[?#]|$)/i):upward(.hz-Listing)
+marktplaats.nl##.hz-StructuredListing a[href*="/v/"][href*="/a" i]:matches-attr(href=/^[^?#]*\/a\d+(?:[-/]|[?#]|$)/i):upward(.hz-StructuredListing)
 ! A seller's website link alone does not identify a promoted listing.
 
 ! Promotional stickers: hide the card, not just its sticker.
-marktplaats.nl##.hz-Listing:has([data-testid="listing-opval-sticker"],.hz-Listing-Opvalsticker-wrapper,.hz-Listing-Opvalsticker-wrapper-new)
+marktplaats.nl##.hz-Listing:has(:is([data-testid="listing-opval-sticker"],[class*="hz-Listing-Opvalsticker-wrapper"]))
 
 ! Homepage advertisement tiles.
 marktplaats.nl##.hz-Listing-imageOverlayLabel:has-text(/^\s*Homepagina-advertentie\s*$/i):upward(.hz-Link.hz-Link--block)
 
-! Advertising slots and their layout wrappers.
-marktplaats.nl##.hz-Banner
-marktplaats.nl##.bannerContainerLoading
-marktplaats.nl##.BannerTop-root
-marktplaats.nl###top-banner-root
-marktplaats.nl###banner-right-container
-marktplaats.nl###banner-top-dt-container
-marktplaats.nl##.hz-FeedBannerBlock
-marktplaats.nl##.Banners-bannerFeedItem
-marktplaats.nl###adsense-root
-marktplaats.nl###adsense-container
-marktplaats.nl###adsense-container-bottom-lazy
-marktplaats.nl###adBlock
-marktplaats.nl##.BrandTileBanner-container
-marktplaats.nl##[data-testid="brand-tile-banner"]
+! Advertising slots and their layout wrappers. Use a top-level comma list, not
+! :is(): uBO joins these into one stylesheet rule, while the browser can bucket
+! each selector independently.
+marktplaats.nl##.hz-Banner,.bannerContainerLoading,.BannerTop-root,#top-banner-root,#banner-right-container,#banner-top-dt-container,.hz-FeedBannerBlock,.Banners-bannerFeedItem,#adsense-root,#adsense-container,#adsense-container-bottom-lazy,#adBlock,.BrandTileBanner-container,[data-testid="brand-tile-banner"]
 
 ! Marketing tiles and sponsored recommendations, not ordinary related items.
-marktplaats.nl##.MpCard-mpCardBanner
-marktplaats.nl##div[role="button"][tabindex]:has(.MpCard-mpCardBanner,img[alt="Marktplaats Marketing Banner"])
-marktplaats.nl##img[alt="Marktplaats Marketing Banner"]
-marktplaats.nl##.AdmarktSimilarItemsContainer
-marktplaats.nl##.AdmarktSimilarItems-root
-marktplaats.nl##.hz-Listings__container--cas[data-testid="BottomBlockLazyListings"]
-marktplaats.nl##.NonFeatureBuyerBanner-root
-marktplaats.nl##.feature-banner[data-testid="50-percent-off-banner"]
+marktplaats.nl##div[role="button"][tabindex]:has(:is(.MpCard-mpCardBanner,img[alt="Marktplaats Marketing Banner"]))
+marktplaats.nl##.MpCard-mpCardBanner,img[alt="Marktplaats Marketing Banner"],.AdmarktSimilarItemsContainer,.AdmarktSimilarItems-root,.hz-Listings__container--cas[data-testid="BottomBlockLazyListings"],.NonFeatureBuyerBanner-root,.feature-banner[data-testid="50-percent-off-banner"]

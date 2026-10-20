@@ -1,5 +1,13 @@
 # Changelog
 
+- Prefer bucketable selectors: collapse the priority badge and reserved-price filters to
+  single substring prefilters, use top-level comma lists instead of static `:is()`
+  groups, and require `/v/` before matching structured Admarkt links. No intended
+  behavior changes.
+
+- Consolidate cosmetic selectors, drop redundant class alternatives and group related
+  placements without intended behavior changes.
+
 - Locked Python and Markdown lint/format tools, type checks, YAML/workflow validation,
   and a shared local/CI check command.
 
