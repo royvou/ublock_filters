@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["selenium==4.51.0"]
+# dependencies = ["selenium==4.53.0"]
 # ///
 """Verify personal filter lists in a disposable Firefox/uBO profile.
 

@@ -36,6 +36,6 @@ dev = [
     "mdformat-gfm>=1.0.0",
     "mypy>=2.4.0",
     "pymarkdownlnt>=0.9.41",
-    "ruff==0.17.1",
+    "ruff==0.17.5",
     "yamllint>=1.38.0",
 ]
